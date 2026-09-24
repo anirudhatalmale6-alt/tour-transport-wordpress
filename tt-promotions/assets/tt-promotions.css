@@ -1,0 +1,261 @@
+/**
+ * Front-end styles for the promotions grid and the sidebar highlight.
+ * Scoped under .ttp so nothing leaks into the theme.
+ */
+
+.ttp {
+	--ttp-brand: #0f766e;
+	--ttp-ink: #102a43;
+	--ttp-muted: #627d98;
+	--ttp-line: #dbe3ec;
+	--ttp-accent: #b45309;
+	--ttp-radius: 16px;
+
+	box-sizing: border-box;
+	color: var(--ttp-ink);
+}
+
+.ttp *,
+.ttp *::before,
+.ttp *::after {
+	box-sizing: inherit;
+}
+
+/* ---------- Grid ---------- */
+
+.ttp-grid {
+	display: grid;
+	gap: 26px;
+}
+
+.ttp-grid--1 { grid-template-columns: 1fr; }
+.ttp-grid--2 { grid-template-columns: repeat(2, 1fr); }
+.ttp-grid--3 { grid-template-columns: repeat(3, 1fr); }
+.ttp-grid--4 { grid-template-columns: repeat(4, 1fr); }
+
+@media (max-width: 1024px) {
+	.ttp-grid--3,
+	.ttp-grid--4 { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 640px) {
+	.ttp-grid { grid-template-columns: 1fr !important; gap: 20px; }
+}
+
+/* ---------- Card ---------- */
+
+.ttp-card {
+	display: flex;
+	flex-direction: column;
+	background: #fff;
+	border: 1px solid var(--ttp-line);
+	border-radius: var(--ttp-radius);
+	overflow: hidden;
+	transition: transform .18s ease, box-shadow .18s ease;
+}
+
+.ttp-card:hover {
+	transform: translateY(-3px);
+	box-shadow: 0 18px 32px -24px rgba(16, 42, 67, .65);
+}
+
+.ttp-card__media {
+	position: relative;
+	aspect-ratio: 16 / 10;
+	background: #eef2f6;
+	overflow: hidden;
+}
+
+.ttp-card__media.is-empty::after {
+	content: "";
+	position: absolute;
+	inset: 0;
+	background: linear-gradient(135deg, #e3ebf2, #f6f9fc);
+}
+
+.ttp-card__img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	display: block;
+}
+
+.ttp-card__badge,
+.ttp-mini__badge {
+	position: absolute;
+	top: 12px;
+	left: 12px;
+	padding: 5px 11px;
+	border-radius: 999px;
+	background: var(--ttp-accent);
+	color: #fff;
+	font-size: 12px;
+	font-weight: 700;
+	letter-spacing: .02em;
+	line-height: 1.4;
+}
+
+.ttp-card__body {
+	flex: 1 1 auto;
+	padding: 20px 20px 8px;
+}
+
+.ttp-card__title {
+	margin: 0 0 8px;
+	font-size: 19px;
+	line-height: 1.3;
+	color: var(--ttp-ink);
+}
+
+.ttp-card__text {
+	margin: 0;
+	font-size: 15px;
+	line-height: 1.55;
+	color: var(--ttp-muted);
+}
+
+.ttp-card__ends {
+	margin: 10px 0 0;
+	font-size: 13px;
+	font-weight: 600;
+	color: var(--ttp-accent);
+}
+
+.ttp-card__foot {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	flex-wrap: wrap;
+	gap: 12px;
+	padding: 16px 20px 20px;
+}
+
+.ttp-card__price,
+.ttp-mini__price {
+	margin: 0;
+	display: flex;
+	align-items: baseline;
+	gap: 7px;
+	flex-wrap: wrap;
+}
+
+.ttp-card__was {
+	font-size: 14px;
+	color: var(--ttp-muted);
+	text-decoration: line-through;
+}
+
+.ttp-card__now {
+	font-size: 22px;
+	font-weight: 800;
+	color: var(--ttp-ink);
+	line-height: 1.1;
+}
+
+.ttp-card__note {
+	font-size: 13px;
+	color: var(--ttp-muted);
+}
+
+.ttp-card__cta {
+	display: inline-block;
+	padding: 10px 18px;
+	border-radius: 9px;
+	background: var(--ttp-brand);
+	color: #fff !important;
+	font-size: 14.5px;
+	font-weight: 700;
+	text-decoration: none;
+	line-height: 1.4;
+	transition: filter .15s ease;
+}
+
+.ttp-card__cta:hover,
+.ttp-mini__cta:hover {
+	filter: brightness(.92);
+}
+
+/* ---------- Sidebar highlight ---------- */
+
+.ttp-highlight {
+	display: grid;
+	gap: 14px;
+}
+
+.ttp-highlight__title {
+	margin: 0 0 4px;
+	font-size: 16px;
+	text-transform: uppercase;
+	letter-spacing: .08em;
+	color: var(--ttp-muted);
+}
+
+.ttp-mini {
+	border: 1px solid var(--ttp-line);
+	border-radius: 13px;
+	overflow: hidden;
+	background: #fff;
+}
+
+.ttp-mini__media {
+	position: relative;
+	aspect-ratio: 16 / 9;
+	background: #eef2f6;
+}
+
+.ttp-mini__media .ttp-card__img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	display: block;
+}
+
+.ttp-mini__badge {
+	top: 9px;
+	left: 9px;
+	font-size: 11px;
+	padding: 4px 9px;
+}
+
+.ttp-mini__body {
+	padding: 13px 14px 15px;
+}
+
+.ttp-mini__title {
+	margin: 0 0 6px;
+	font-size: 15.5px;
+	line-height: 1.35;
+	color: var(--ttp-ink);
+}
+
+.ttp-mini__price .ttp-card__now {
+	font-size: 18px;
+}
+
+.ttp-mini__cta {
+	display: inline-block;
+	margin-top: 10px;
+	padding: 8px 14px;
+	border-radius: 8px;
+	background: var(--ttp-brand);
+	color: #fff !important;
+	font-size: 13.5px;
+	font-weight: 700;
+	text-decoration: none;
+	transition: filter .15s ease;
+}
+
+/* ---------- Empty state ---------- */
+
+.ttp-empty {
+	padding: 22px;
+	border: 1px dashed #cbd5e1;
+	border-radius: 12px;
+	text-align: center;
+	color: #64748b;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.ttp-card { transition: none; }
+	.ttp-card:hover { transform: none; }
+}

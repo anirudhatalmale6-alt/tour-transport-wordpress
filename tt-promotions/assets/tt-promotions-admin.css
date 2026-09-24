@@ -1,0 +1,40 @@
+/* Admin styling for the Promotions list and the Deal details box. */
+
+.ttp-meta__intro {
+	margin: 0 0 4px;
+	padding: 10px 12px;
+	background: #f6f7f7;
+	border-left: 4px solid #2271b1;
+	color: #3c434a;
+}
+
+.ttp-thumb {
+	display: block;
+	width: 72px;
+	height: 54px;
+	object-fit: cover;
+	border-radius: 4px;
+}
+
+.ttp-thumb--empty {
+	background: repeating-linear-gradient(45deg, #f0f0f1, #f0f0f1 6px, #e5e5e5 6px, #e5e5e5 12px);
+}
+
+.ttp-state {
+	display: inline-block;
+	padding: 2px 10px;
+	border-radius: 999px;
+	font-size: 12px;
+	font-weight: 600;
+	line-height: 1.7;
+}
+
+.ttp-state--on   { background: #dcfce7; color: #14532d; }
+.ttp-state--off  { background: #e5e7eb; color: #4b5563; }
+.ttp-state--soon { background: #fef3c7; color: #78350f; }
+
+.ttp-dim { opacity: .3; }
+
+.column-ttp_image { width: 90px; }
+.column-ttp_featured,
+.column-menu_order { width: 80px; }

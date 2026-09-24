@@ -1,0 +1,413 @@
+/**
+ * Front-end styles for the booking forms.
+ *
+ * Deliberately scoped under .ttb and built on CSS custom properties so the
+ * forms inherit the theme's typography while keeping their own layout.
+ */
+
+.ttb {
+	--ttb-brand: #0f766e;
+	--ttb-brand-dark: #0b5f58;
+	--ttb-ink: #102a43;
+	--ttb-muted: #627d98;
+	--ttb-line: #dbe3ec;
+	--ttb-bg: #ffffff;
+	--ttb-soft: #f5f8fb;
+	--ttb-error: #c0392b;
+	--ttb-radius: 12px;
+
+	box-sizing: border-box;
+	color: var(--ttb-ink);
+	font-size: 16px;
+	line-height: 1.5;
+}
+
+.ttb *,
+.ttb *::before,
+.ttb *::after {
+	box-sizing: inherit;
+}
+
+/* ---------- Tabs ---------- */
+
+.ttb-tablist {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+	margin-bottom: 18px;
+}
+
+.ttb-tab {
+	display: inline-flex;
+	align-items: center;
+	gap: 9px;
+	flex: 1 1 180px;
+	justify-content: center;
+	padding: 13px 18px;
+	border: 1px solid var(--ttb-line);
+	border-radius: var(--ttb-radius);
+	background: var(--ttb-bg);
+	color: var(--ttb-muted);
+	font-size: 15px;
+	font-weight: 600;
+	line-height: 1.2;
+	cursor: pointer;
+	transition: border-color .15s ease, color .15s ease, background .15s ease, box-shadow .15s ease;
+}
+
+.ttb-tab:hover {
+	border-color: var(--ttb-brand);
+	color: var(--ttb-brand);
+}
+
+.ttb-tab.is-active {
+	background: var(--ttb-brand);
+	border-color: var(--ttb-brand);
+	color: #fff;
+	box-shadow: 0 6px 16px -8px var(--ttb-brand);
+}
+
+.ttb-tab:focus-visible {
+	outline: 2px solid var(--ttb-brand);
+	outline-offset: 2px;
+}
+
+.ttb-icon {
+	width: 20px;
+	height: 20px;
+	fill: currentColor;
+	flex: none;
+}
+
+.ttb-panel[hidden] {
+	display: none;
+}
+
+/* ---------- Form shell ---------- */
+
+.ttb-form {
+	position: relative;
+	background: var(--ttb-bg);
+	border: 1px solid var(--ttb-line);
+	border-radius: 18px;
+	padding: 28px;
+	box-shadow: 0 18px 40px -32px rgba(16, 42, 67, .5);
+}
+
+.ttb-form__head {
+	margin-bottom: 22px;
+}
+
+.ttb-form__title {
+	margin: 0 0 4px;
+	font-size: 22px;
+	line-height: 1.25;
+	color: var(--ttb-ink);
+}
+
+.ttb-form__tagline {
+	margin: 0;
+	color: var(--ttb-muted);
+	font-size: 15px;
+}
+
+.ttb-section + .ttb-section {
+	margin-top: 24px;
+	padding-top: 24px;
+	border-top: 1px solid var(--ttb-line);
+}
+
+.ttb-section__title {
+	margin: 0 0 14px;
+	font-size: 12px;
+	font-weight: 700;
+	letter-spacing: .09em;
+	text-transform: uppercase;
+	color: var(--ttb-muted);
+}
+
+/* ---------- Grid ---------- */
+
+.ttb-grid {
+	display: grid;
+	grid-template-columns: repeat(6, 1fr);
+	gap: 16px;
+}
+
+.ttb-field--full { grid-column: span 6; }
+.ttb-field--half { grid-column: span 3; }
+.ttb-field--third { grid-column: span 2; }
+
+@media (max-width: 782px) {
+	.ttb-field--third { grid-column: span 3; }
+}
+
+@media (max-width: 560px) {
+	.ttb-form { padding: 20px 16px; }
+	.ttb-field--half,
+	.ttb-field--third { grid-column: span 6; }
+	.ttb-tab { flex: 1 1 100%; }
+}
+
+/* ---------- Fields ---------- */
+
+.ttb-field[hidden] {
+	display: none;
+}
+
+.ttb-field__label {
+	display: block;
+	margin-bottom: 6px;
+	font-size: 14px;
+	font-weight: 600;
+	color: var(--ttb-ink);
+}
+
+.ttb-field__label.is-required::after {
+	content: " *";
+	color: var(--ttb-error);
+}
+
+.ttb-input {
+	width: 100%;
+	padding: 11px 13px;
+	border: 1px solid var(--ttb-line);
+	border-radius: 10px;
+	background: var(--ttb-bg);
+	color: var(--ttb-ink);
+	font: inherit;
+	font-size: 15px;
+	line-height: 1.4;
+	transition: border-color .15s ease, box-shadow .15s ease;
+	-webkit-appearance: none;
+	appearance: none;
+}
+
+select.ttb-input {
+	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23627d98'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+	background-repeat: no-repeat;
+	background-position: right 10px center;
+	background-size: 20px;
+	padding-right: 36px;
+}
+
+.ttb-input:focus {
+	border-color: var(--ttb-brand);
+	box-shadow: 0 0 0 3px color-mix(in srgb, var(--ttb-brand) 18%, transparent);
+	outline: none;
+}
+
+textarea.ttb-input {
+	resize: vertical;
+	min-height: 96px;
+}
+
+.ttb-field__help {
+	margin: 5px 0 0;
+	font-size: 13px;
+	color: var(--ttb-muted);
+}
+
+.ttb-field__error {
+	margin: 5px 0 0;
+	font-size: 13px;
+	font-weight: 600;
+	color: var(--ttb-error);
+}
+
+.ttb-field__error[hidden] {
+	display: none;
+}
+
+.ttb-field.has-error .ttb-input {
+	border-color: var(--ttb-error);
+}
+
+/* ---------- Radios & checkboxes ---------- */
+
+.ttb-options {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+}
+
+.ttb-option {
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+	padding: 10px 14px;
+	border: 1px solid var(--ttb-line);
+	border-radius: 10px;
+	background: var(--ttb-bg);
+	font-size: 14.5px;
+	cursor: pointer;
+	transition: border-color .15s ease, background .15s ease;
+}
+
+.ttb-option:hover {
+	border-color: var(--ttb-brand);
+}
+
+.ttb-option input {
+	accent-color: var(--ttb-brand);
+	margin: 0;
+	flex: none;
+}
+
+.ttb-option:has(input:checked) {
+	border-color: var(--ttb-brand);
+	background: color-mix(in srgb, var(--ttb-brand) 8%, #fff);
+}
+
+.ttb-consent {
+	margin-top: 20px;
+	padding: 14px 16px;
+	background: var(--ttb-soft);
+	border-radius: 10px;
+}
+
+.ttb-check {
+	display: flex;
+	align-items: flex-start;
+	gap: 10px;
+	font-size: 14.5px;
+	color: var(--ttb-muted);
+	cursor: pointer;
+}
+
+.ttb-check input {
+	margin-top: 3px;
+	accent-color: var(--ttb-brand);
+	flex: none;
+}
+
+/* ---------- Footer ---------- */
+
+.ttb-form__foot {
+	margin-top: 24px;
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 14px;
+}
+
+.ttb-submit {
+	display: inline-flex;
+	align-items: center;
+	gap: 10px;
+	padding: 14px 28px;
+	border: 0;
+	border-radius: 10px;
+	background: var(--ttb-brand);
+	color: #fff;
+	font: inherit;
+	font-size: 16px;
+	font-weight: 700;
+	cursor: pointer;
+	transition: background .15s ease, transform .1s ease;
+}
+
+.ttb-submit:hover {
+	background: var(--ttb-brand-dark);
+}
+
+.ttb-submit:active {
+	transform: translateY(1px);
+}
+
+.ttb-submit:disabled {
+	opacity: .65;
+	cursor: progress;
+}
+
+.ttb-submit:focus-visible {
+	outline: 2px solid var(--ttb-ink);
+	outline-offset: 3px;
+}
+
+.ttb-reassure {
+	margin: 0;
+	font-size: 13.5px;
+	color: var(--ttb-muted);
+}
+
+.ttb-spinner {
+	display: none;
+	width: 16px;
+	height: 16px;
+	border: 2px solid rgba(255, 255, 255, .45);
+	border-top-color: #fff;
+	border-radius: 50%;
+	animation: ttb-spin .7s linear infinite;
+}
+
+.ttb-form.is-sending .ttb-spinner {
+	display: inline-block;
+}
+
+@keyframes ttb-spin {
+	to { transform: rotate(360deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.ttb-spinner { animation-duration: 2s; }
+	.ttb-submit, .ttb-tab, .ttb-input { transition: none; }
+}
+
+/* ---------- Alerts ---------- */
+
+.ttb-alert {
+	margin-bottom: 20px;
+	padding: 14px 16px;
+	border-radius: 10px;
+	font-size: 15px;
+	line-height: 1.5;
+}
+
+.ttb-alert[hidden] {
+	display: none;
+}
+
+.ttb-alert--success {
+	background: #e6f6f1;
+	border: 1px solid #a9ddcd;
+	color: #0b5f58;
+}
+
+.ttb-alert--error {
+	background: #fdecea;
+	border: 1px solid #f3c2bc;
+	color: #a02b1c;
+}
+
+/* Once a booking succeeds the questions are replaced by the confirmation. */
+.ttb-form--done .ttb-body,
+.ttb-form--done .ttb-form__foot {
+	display: none;
+}
+
+/* ---------- Utilities ---------- */
+
+.ttb-hp {
+	position: absolute !important;
+	left: -9999px !important;
+	width: 1px;
+	height: 1px;
+	overflow: hidden;
+}
+
+.ttb-notice {
+	padding: 12px 14px;
+	border: 1px dashed #cbd2d9;
+	border-radius: 8px;
+	color: #627d98;
+	font-size: 14px;
+}
+
+.ttb-pill {
+	display: inline-block;
+	padding: 2px 10px;
+	border-radius: 999px;
+	font-size: 12px;
+	font-weight: 600;
+}

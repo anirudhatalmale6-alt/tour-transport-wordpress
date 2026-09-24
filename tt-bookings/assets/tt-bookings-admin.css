@@ -1,0 +1,75 @@
+/* Admin styling for the bookings list, detail screen and settings. */
+
+.ttb-pill {
+	display: inline-block;
+	padding: 2px 10px;
+	border-radius: 999px;
+	font-size: 12px;
+	font-weight: 600;
+	line-height: 1.7;
+	background: #eef2f6;
+	color: #334e68;
+}
+
+.ttb-pill--airport { background: #e0f2fe; color: #075985; }
+.ttb-pill--tour    { background: #dcfce7; color: #14532d; }
+.ttb-pill--hire    { background: #fef3c7; color: #78350f; }
+
+.ttb-status {
+	display: inline-block;
+	padding: 2px 10px;
+	border-radius: 999px;
+	font-size: 12px;
+	font-weight: 600;
+	line-height: 1.7;
+}
+
+.ttb-status--new       { background: #fee2e2; color: #991b1b; }
+.ttb-status--confirmed { background: #dcfce7; color: #14532d; }
+.ttb-status--cancelled { background: #e5e7eb; color: #4b5563; }
+
+.ttb-mail { font-size: 12px; }
+.ttb-mail.is-ok  { color: #15803d; }
+.ttb-mail.is-bad { color: #b91c1c; }
+
+.ttb-detail-head {
+	font-size: 15px;
+	margin: 0 0 12px;
+	color: #1d2327;
+}
+
+.ttb-detail th {
+	text-align: left;
+	color: #50575e;
+	font-weight: 500;
+}
+
+.ttb-maillog {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.ttb-maillog li {
+	padding: 6px 0;
+	border-bottom: 1px solid #f0f0f1;
+	font-size: 13px;
+}
+
+.ttb-maillog li:last-child { border-bottom: 0; }
+.ttb-maillog .is-ok  { color: #15803d; }
+.ttb-maillog .is-bad { color: #b91c1c; }
+.ttb-maillog .ttb-err { color: #b91c1c; }
+
+.ttb-logo-picker { display: flex; align-items: center; gap: 12px; }
+
+.ttb-logo-preview {
+	max-height: 48px;
+	max-width: 180px;
+	background: #f6f7f7;
+	padding: 4px;
+	border: 1px solid #dcdcde;
+	border-radius: 4px;
+}
+
+.ttb-logo-preview[hidden] { display: none; }
