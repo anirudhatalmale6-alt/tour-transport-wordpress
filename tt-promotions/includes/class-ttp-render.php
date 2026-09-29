@@ -38,6 +38,13 @@ class TTP_Render {
 	}
 
 	/**
+	 * Public wrapper so the destinations grid shares this stylesheet.
+	 */
+	public static function enqueue_public() {
+		self::enqueue();
+	}
+
+	/**
 	 * [tt_promotions columns="3" limit="-1"]
 	 *
 	 * @param array $atts Shortcode attributes.

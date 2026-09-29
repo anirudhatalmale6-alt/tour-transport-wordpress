@@ -90,7 +90,14 @@
 				}
 
 				var visible = Object.keys( condition ).every( function ( key ) {
-					return String( currentValue( key ) ) === String( condition[ key ] );
+					// A trigger may be one value or a list of accepted values.
+					var expected = condition[ key ];
+					var accepted = Array.isArray( expected ) ? expected : [ expected ];
+					var actual = String( currentValue( key ) );
+
+					return accepted.some( function ( one ) {
+						return String( one ) === actual;
+					} );
 				} );
 
 				if ( visible ) {
@@ -144,8 +151,9 @@
 	function validateInput( input ) {
 		var wrapper = fieldWrapper( input );
 
-		// Anything the visitor cannot see is not their problem.
-		if ( wrapper && wrapper.hasAttribute( 'hidden' ) ) {
+		// Anything the visitor cannot see is not their problem - including a
+		// field sitting inside a section that is currently hidden.
+		if ( wrapper && ( wrapper.hasAttribute( 'hidden' ) || wrapper.closest( '[hidden]' ) ) ) {
 			setError( input, '' );
 			return true;
 		}

@@ -197,6 +197,40 @@ class TTB_Fields {
 						),
 					),
 					array(
+						// Groceries are only useful on a leg that ends at home,
+						// so this whole section hides on an airport-bound trip.
+						'title'   => __( 'Groceries for your arrival', 'tt-bookings' ),
+						'show_if' => array( 'direction' => array( 'arrival', 'return' ) ),
+						'fields'  => array(
+							array(
+								'key'      => 'milk',
+								'label'    => __( 'Milk', 'tt-bookings' ),
+								'type'     => 'select',
+								'required' => false,
+								'width'    => 'half',
+								'options'  => array(
+									''   => __( 'No thanks', 'tt-bookings' ),
+									'2l' => __( '2 litres', 'tt-bookings' ),
+									'3l' => __( '3 litres', 'tt-bookings' ),
+								),
+								'show_if'  => array( 'direction' => array( 'arrival', 'return' ) ),
+							),
+							array(
+								'key'      => 'bread',
+								'label'    => __( 'Bread', 'tt-bookings' ),
+								'type'     => 'select',
+								'required' => false,
+								'width'    => 'half',
+								'options'  => array(
+									''          => __( 'No thanks', 'tt-bookings' ),
+									'white'     => __( 'White', 'tt-bookings' ),
+									'wholemeal' => __( 'Wholemeal', 'tt-bookings' ),
+								),
+								'show_if'  => array( 'direction' => array( 'arrival', 'return' ) ),
+							),
+						),
+					),
+					array(
 						'title'  => __( 'Your details', 'tt-bookings' ),
 						'fields' => self::contact_fields(),
 					),

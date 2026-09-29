@@ -7,7 +7,7 @@ install and keep working if the theme is changed later.
 | Plugin | What it does |
 | --- | --- |
 | `tt-bookings` | Three booking forms (Airport Transfer, Tour, Hire a Vehicle), each storing the request in wp-admin, confirming it to the customer by email and forwarding it to the agency inbox. |
-| `tt-promotions` | A Promotions section in wp-admin — image, short text, price — that feeds the Promotions page and a sidebar widget automatically. |
+| `tt-promotions` | A Promotions section in wp-admin — image, short text, price — that feeds the Promotions page and a sidebar widget automatically, plus Destinations: image cards that link straight into the booking form. |
 
 Requires WordPress 6.0+ and PHP 7.4+.
 
@@ -37,7 +37,9 @@ re-labelling a question is a single edit there; the form, the validation, the
 admin screen, both emails and the CSV export all follow automatically.
 
 * **Airport Transfer** — direction, pickup and drop-off, date, time, flight
-  number, return leg, passengers, suitcases, child seats, vehicle class.
+  number, return leg, passengers, suitcases, child seats, vehicle class, and
+  a groceries section (milk, bread) that appears only on a leg ending at the
+  customer's home.
 * **Tour** — tour or destination, date, duration, start time, adults, children,
   guide language, hotel pickup, dietary requirements.
 * **Hire a Vehicle** — vehicle type, with or without driver, pickup and return
@@ -45,6 +47,25 @@ admin screen, both emails and the CSV export all follow automatically.
   only), extras.
 
 All three then ask for name, email, phone, country and free-text notes.
+
+### Conditional questions
+
+A field — or a whole section, heading included — can carry a `show_if`
+trigger, and the trigger accepts either one value or a list of accepted
+values:
+
+```php
+'show_if' => array( 'direction' => array( 'arrival', 'return' ) ),
+```
+
+Hidden answers are never submitted and never validated, on both the
+JavaScript and the no-JavaScript path.
+
+### Arriving from a destination card
+
+A link of the form `/bookings/?tour=Blue+Mountains#ttb` opens the Tour tab and
+fills the destination in, so a visitor who clicked a picture does not have to
+retype where they want to go.
 
 ### Settings
 
@@ -111,6 +132,16 @@ highlight, so it is never an empty box. Deal images get the deal title as alt
 text when the media library has none.
 
 **Promotions → How to use** repeats all of this inside the dashboard.
+
+### Destinations
+
+**Destinations → Add destination.** Name, a photo, and optionally one line in
+the Excerpt box. Place the grid with `[tt_destinations columns="5"]`.
+
+Each card links to the booking form with its own name pre-filled. The booking
+page is found automatically by looking for the booking shortcode, so there is
+nothing to configure; a per-destination "Link" field overrides it when a card
+needs to go somewhere else.
 
 ## Development notes
 

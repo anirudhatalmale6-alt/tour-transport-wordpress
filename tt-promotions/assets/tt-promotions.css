@@ -245,6 +245,111 @@
 	transition: filter .15s ease;
 }
 
+/* ---------- Destinations ---------- */
+
+.ttp-dest {
+	display: grid;
+	gap: 20px;
+}
+
+.ttp-dest--2 { grid-template-columns: repeat(2, 1fr); }
+.ttp-dest--3 { grid-template-columns: repeat(3, 1fr); }
+.ttp-dest--4 { grid-template-columns: repeat(4, 1fr); }
+.ttp-dest--5 { grid-template-columns: repeat(5, 1fr); }
+.ttp-dest--6 { grid-template-columns: repeat(6, 1fr); }
+
+@media (max-width: 1100px) {
+	.ttp-dest--5,
+	.ttp-dest--6 { grid-template-columns: repeat(3, 1fr); }
+	.ttp-dest--4 { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 640px) {
+	.ttp-dest { grid-template-columns: repeat(2, 1fr) !important; gap: 14px; }
+}
+
+.ttp-dest__card {
+	position: relative;
+	display: block;
+	border-radius: var(--ttp-radius);
+	overflow: hidden;
+	text-decoration: none !important;
+	color: #fff !important;
+	background: #1c2530;
+	aspect-ratio: 3 / 4;
+	transition: transform .18s ease, box-shadow .18s ease;
+}
+
+.ttp-dest__card:hover {
+	transform: translateY(-3px);
+	box-shadow: 0 18px 32px -22px rgba(16, 42, 67, .7);
+}
+
+.ttp-dest__card:focus-visible {
+	outline: 3px solid var(--ttp-brand);
+	outline-offset: 3px;
+}
+
+.ttp-dest__media {
+	position: absolute;
+	inset: 0;
+	display: block;
+}
+
+.ttp-dest__img,
+.ttp-dest__placeholder {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	display: block;
+}
+
+.ttp-dest__placeholder {
+	background: linear-gradient(140deg, #24303d, #47586b);
+}
+
+/* A scrim so the name stays readable over any photo. */
+.ttp-dest__card::after {
+	content: "";
+	position: absolute;
+	inset: 0;
+	background: linear-gradient(to top, rgba(8, 12, 18, .82) 0%, rgba(8, 12, 18, .35) 42%, rgba(8, 12, 18, 0) 70%);
+}
+
+.ttp-dest__body {
+	position: absolute;
+	inset: auto 0 0 0;
+	z-index: 1;
+	display: block;
+	padding: 16px 16px 18px;
+}
+
+.ttp-dest__title {
+	display: block;
+	font-size: 18px;
+	font-weight: 700;
+	line-height: 1.25;
+	text-shadow: 0 1px 12px rgba(0, 0, 0, .45);
+}
+
+.ttp-dest__text {
+	display: block;
+	margin-top: 4px;
+	font-size: 13.5px;
+	line-height: 1.45;
+	opacity: .9;
+}
+
+@media (max-width: 640px) {
+	.ttp-dest__title { font-size: 16px; }
+	.ttp-dest__text { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.ttp-dest__card { transition: none; }
+	.ttp-dest__card:hover { transform: none; }
+}
+
 /* ---------- Empty state ---------- */
 
 .ttp-empty {

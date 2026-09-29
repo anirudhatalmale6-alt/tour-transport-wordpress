@@ -151,7 +151,8 @@
 
 /* ---------- Fields ---------- */
 
-.ttb-field[hidden] {
+.ttb-field[hidden],
+.ttb-section[hidden] {
 	display: none;
 }
 

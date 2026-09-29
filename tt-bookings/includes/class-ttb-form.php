@@ -156,6 +156,12 @@ class TTB_Form {
 
 		// If a submission just came back with errors, open that tab.
 		$active = in_array( $atts['default'], $types, true ) ? $atts['default'] : $types[0];
+
+		// Arriving from a destination card means they want the tour form.
+		if ( ! empty( $_GET['tour'] ) && in_array( 'tour', $types, true ) ) {
+			$active = 'tour';
+		}
+
 		$replay = self::replay();
 		if ( $replay && in_array( $replay['type'], $types, true ) ) {
 			$active = $replay['type'];
@@ -293,7 +299,13 @@ class TTB_Form {
 
 			<div class="ttb-body">
 				<?php foreach ( $form['sections'] as $section ) : ?>
-					<section class="ttb-section">
+					<?php
+					// A section can carry the same trigger as a field, so its
+					// heading disappears along with the questions under it.
+					$section_if = ! empty( $section['show_if'] ) ? wp_json_encode( $section['show_if'] ) : '';
+					?>
+					<section class="ttb-section"
+						<?php echo $section_if ? 'data-ttb-showif="' . esc_attr( $section_if ) . '"' : ''; ?>>
 						<?php if ( ! empty( $section['title'] ) ) : ?>
 							<h4 class="ttb-section__title"><?php echo esc_html( $section['title'] ); ?></h4>
 						<?php endif; ?>
@@ -347,6 +359,12 @@ class TTB_Form {
 		$error = isset( $errors[ $key ] ) ? $errors[ $key ] : '';
 
 		$value = isset( $values[ $key ] ) ? $values[ $key ] : ( isset( $field['default'] ) ? $field['default'] : '' );
+
+		// A destination card links in as ?tour=Blue+Mountains, so the visitor
+		// lands on the form with their choice already filled in.
+		if ( 'tour_name' === $key && ! isset( $values[ $key ] ) && ! empty( $_GET['tour'] ) ) {
+			$value = sanitize_text_field( wp_unslash( $_GET['tour'] ) );
+		}
 
 		$classes = array( 'ttb-field', 'ttb-field--' . $width, 'ttb-field--' . $type );
 		if ( $error ) {

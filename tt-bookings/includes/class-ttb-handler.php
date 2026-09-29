@@ -304,14 +304,17 @@ class TTB_Handler {
 	/**
 	 * Whether a conditional field's trigger matches what was posted.
 	 *
-	 * @param array $condition Map of field key => required value.
+	 * @param array $condition Map of field key => required value, or an array
+	 *                         of accepted values ("any of these").
 	 * @param array $posted    Raw posted values.
 	 * @return bool
 	 */
 	protected static function condition_met( $condition, $posted ) {
 		foreach ( $condition as $key => $expected ) {
-			$actual = isset( $posted[ $key ] ) ? $posted[ $key ] : '';
-			if ( (string) $actual !== (string) $expected ) {
+			$actual   = isset( $posted[ $key ] ) ? (string) $posted[ $key ] : '';
+			$accepted = array_map( 'strval', is_array( $expected ) ? $expected : array( $expected ) );
+
+			if ( ! in_array( $actual, $accepted, true ) ) {
 				return false;
 			}
 		}
