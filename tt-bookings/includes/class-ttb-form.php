@@ -95,8 +95,9 @@ class TTB_Form {
 	public static function shortcode_single( $atts ) {
 		$atts = shortcode_atts(
 			array(
-				'type'  => 'airport',
-				'title' => '',
+				'type'    => 'airport',
+				'title'   => '',
+				'compact' => 'no',
 			),
 			$atts,
 			'tt_booking_form'
@@ -114,9 +115,11 @@ class TTB_Form {
 		self::enqueue();
 
 		ob_start();
-		echo '<div class="ttb">';
+		$compact = in_array( strtolower( (string) $atts['compact'] ), array( 'yes', 'true', '1' ), true );
+
+		echo '<div class="ttb' . ( $compact ? ' ttb--compact' : '' ) . '">';
 		echo self::anchor(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- static markup.
-		self::render_form( $type, $atts['title'] );
+		self::render_form( $type, $atts['title'], $compact );
 		echo '</div>';
 
 		return ob_get_clean();
@@ -133,6 +136,7 @@ class TTB_Form {
 			array(
 				'types'   => implode( ',', TTB_Fields::types() ),
 				'default' => '',
+				'compact' => 'no',
 			),
 			$atts,
 			'tt_booking_forms'
@@ -167,11 +171,12 @@ class TTB_Form {
 			$active = $replay['type'];
 		}
 
-		$uid = wp_unique_id( 'ttb-tabs-' );
+		$uid     = wp_unique_id( 'ttb-tabs-' );
+		$compact = in_array( strtolower( (string) $atts['compact'] ), array( 'yes', 'true', '1' ), true );
 
 		ob_start();
 		?>
-		<div class="ttb ttb-tabs" id="<?php echo esc_attr( $uid ); ?>">
+		<div class="ttb ttb-tabs<?php echo $compact ? ' ttb--compact' : ''; ?>" id="<?php echo esc_attr( $uid ); ?>">
 			<?php echo self::anchor(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- static markup. ?>
 			<div class="ttb-tablist" role="tablist" aria-label="<?php esc_attr_e( 'Booking type', 'tt-bookings' ); ?>">
 				<?php foreach ( $types as $type ) : ?>
@@ -195,7 +200,7 @@ class TTB_Form {
 					aria-labelledby="<?php echo esc_attr( $uid . '-tab-' . $type ); ?>"
 					data-ttb-panel="<?php echo esc_attr( $type ); ?>"
 					<?php echo $type === $active ? '' : 'hidden'; ?>>
-					<?php self::render_form( $type, '' ); ?>
+					<?php self::render_form( $type, '', $compact ); ?>
 				</div>
 			<?php endforeach; ?>
 		</div>
@@ -234,8 +239,14 @@ class TTB_Form {
 	 * @param string $type  Form type.
 	 * @param string $title Optional heading override.
 	 */
-	public static function render_form( $type, $title = '' ) {
+	public static function render_form( $type, $title = '', $compact = false ) {
 		$form   = TTB_Fields::get_form( $type );
+
+		// A hero panel is narrow; show only the questions needed to start a
+		// booking and send the visitor to the full form for the rest.
+		if ( $compact ) {
+			$form = self::compact_form( $form );
+		}
 		$replay = self::replay();
 		$is_replay = ( $replay && $replay['type'] === $type );
 		$values    = $is_replay ? $replay['values'] : array();
@@ -309,6 +320,9 @@ class TTB_Form {
 						<?php if ( ! empty( $section['title'] ) ) : ?>
 							<h4 class="ttb-section__title"><?php echo esc_html( $section['title'] ); ?></h4>
 						<?php endif; ?>
+						<?php if ( ! empty( $section['description'] ) ) : ?>
+							<p class="ttb-section__desc"><?php echo esc_html( $section['description'] ); ?></p>
+						<?php endif; ?>
 						<div class="ttb-grid">
 							<?php foreach ( $section['fields'] as $field ) : ?>
 								<?php self::render_field( $field, $uid, $values, $errors ); ?>
@@ -336,7 +350,16 @@ class TTB_Form {
 					<span class="ttb-submit__label"><?php echo esc_html( $form['submit'] ); ?></span>
 					<span class="ttb-spinner" aria-hidden="true"></span>
 				</button>
-				<p class="ttb-reassure"><?php esc_html_e( 'No payment now - we confirm availability and price by email first.', 'tt-bookings' ); ?></p>
+				<?php if ( $compact && self::full_form_url() ) : ?>
+					<p class="ttb-reassure">
+						<a href="<?php echo esc_url( self::full_form_url() ); ?>">
+							<?php esc_html_e( 'More options', 'tt-bookings' ); ?>
+						</a>
+						<?php esc_html_e( '- flight number, luggage, vehicle class and more.', 'tt-bookings' ); ?>
+					</p>
+				<?php else : ?>
+					<p class="ttb-reassure"><?php esc_html_e( 'No payment now - we confirm availability and price by email first.', 'tt-bookings' ); ?></p>
+				<?php endif; ?>
 			</footer>
 		</form>
 		<?php
@@ -539,6 +562,73 @@ class TTB_Form {
 		return '<svg class="ttb-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">' . $path . '</svg>';
 	}
 
+	/**
+	 * Reduce a form to the questions marked for the compact hero panel.
+	 *
+	 * Everything dropped here is optional, so a compact submission is still a
+	 * complete, valid booking request.
+	 *
+	 * @param array $form Full form definition.
+	 * @return array
+	 */
+	protected static function compact_form( $form ) {
+		$sections = array();
+
+		foreach ( $form['sections'] as $section ) {
+			$fields = array_values(
+				array_filter(
+					$section['fields'],
+					static function ( $field ) {
+						return ! empty( $field['compact'] );
+					}
+				)
+			);
+
+			if ( $fields ) {
+				$section['fields'] = $fields;
+				$sections[]        = $section;
+			}
+		}
+
+		$form['sections'] = $sections;
+
+		return $form;
+	}
+
+	/**
+	 * The page holding the full booking form, found by its own shortcode so
+	 * there is nothing to configure.
+	 *
+	 * @return string
+	 */
+	protected static function full_form_url() {
+		static $url = null;
+
+		if ( null !== $url ) {
+			return $url;
+		}
+
+		$url   = '';
+		$pages = get_posts(
+			array(
+				'post_type'              => 'page',
+				'post_status'            => 'publish',
+				'posts_per_page'         => 50,
+				'no_found_rows'          => true,
+				'update_post_term_cache' => false,
+			)
+		);
+
+		foreach ( $pages as $page ) {
+			if ( has_shortcode( $page->post_content, 'tt_booking_forms' )
+				|| has_shortcode( $page->post_content, 'tt_booking_form' ) ) {
+				$url = get_permalink( $page );
+				break;
+			}
+		}
+
+		return $url;
+	}
 	/**
 	 * A darker shade of a hex colour, used for the button hover state.
 	 *

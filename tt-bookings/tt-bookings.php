@@ -2,7 +2,7 @@
 /**
  * Plugin Name:       Tour & Transport Bookings
  * Description:       Three booking forms - Airport Transfer, Tour and Hire a Vehicle. Each submission is stored in the WordPress admin, confirmed to the customer by email and forwarded to the agency inbox.
- * Version:           1.1.0
+ * Version:           1.3.1
  * Requires at least: 6.0
  * Requires PHP:      7.4
  * Author:            Anirudha Talmale
@@ -11,7 +11,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'TTB_VERSION', '1.1.0' );
+define( 'TTB_VERSION', '1.3.1' );
 define( 'TTB_FILE', __FILE__ );
 define( 'TTB_PATH', plugin_dir_path( __FILE__ ) );
 define( 'TTB_URL', plugin_dir_url( __FILE__ ) );

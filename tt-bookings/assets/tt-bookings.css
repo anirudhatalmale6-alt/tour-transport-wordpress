@@ -117,6 +117,12 @@
 	border-top: 1px solid var(--ttb-line);
 }
 
+.ttb-section__desc {
+	margin: -6px 0 14px;
+	font-size: 13.5px;
+	color: var(--ttb-muted);
+}
+
 .ttb-section__title {
 	margin: 0 0 14px;
 	font-size: 12px;
@@ -411,4 +417,94 @@ textarea.ttb-input {
 	border-radius: 999px;
 	font-size: 12px;
 	font-weight: 600;
+}
+
+/* ---------- Compact panel (hero) ---------- */
+
+.ttb--compact .ttb-form {
+	padding: 20px 18px;
+	border-radius: 14px;
+}
+
+.ttb--compact .ttb-form__head {
+	margin-bottom: 14px;
+}
+
+.ttb--compact .ttb-form__title {
+	font-size: 19px;
+}
+
+.ttb--compact .ttb-form__tagline {
+	font-size: 14px;
+}
+
+.ttb--compact .ttb-grid {
+	gap: 12px;
+}
+
+.ttb--compact .ttb-section + .ttb-section {
+	margin-top: 16px;
+	padding-top: 16px;
+}
+
+.ttb--compact .ttb-section__title {
+	margin-bottom: 10px;
+}
+
+.ttb--compact .ttb-option {
+	padding: 8px 12px;
+	font-size: 13.5px;
+}
+
+.ttb--compact .ttb-input {
+	padding: 9px 11px;
+	font-size: 14.5px;
+}
+
+.ttb--compact .ttb-form__foot {
+	margin-top: 16px;
+	gap: 8px;
+}
+
+.ttb--compact .ttb-submit {
+	width: 100%;
+	justify-content: center;
+	padding: 12px 20px;
+	font-size: 15px;
+}
+
+.ttb--compact .ttb-reassure {
+	font-size: 13px;
+	width: 100%;
+	text-align: center;
+}
+
+.ttb--compact .ttb-tablist {
+	gap: 6px;
+	margin-bottom: 12px;
+}
+
+.ttb--compact .ttb-tab {
+	padding: 10px 12px;
+	font-size: 14px;
+	flex: 1 1 100px;
+}
+
+/* The brand gold is as bright as white, so an active tab needs dark text. */
+.ttb-tab.is-active {
+	color: #0b0b0c;
+}
+
+.ttb-tab.is-active .ttb-icon {
+	fill: #0b0b0c;
+}
+
+/* Links inside the form use the ink colour: the brand colour may be a pale
+   gold that is unreadable as text on white. */
+.ttb-reassure a,
+.ttb-form a:not(.ttb-submit) {
+	color: var(--ttb-ink);
+	font-weight: 600;
+	text-decoration: underline;
+	text-underline-offset: 2px;
 }

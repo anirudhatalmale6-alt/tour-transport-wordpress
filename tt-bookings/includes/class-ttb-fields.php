@@ -20,6 +20,7 @@ class TTB_Fields {
 		return array(
 			array(
 				'key'      => 'full_name',
+								'compact'  => true,
 				'label'    => __( 'Full name', 'tt-bookings' ),
 				'type'     => 'text',
 				'required' => true,
@@ -28,6 +29,7 @@ class TTB_Fields {
 			),
 			array(
 				'key'      => 'email',
+								'compact'  => true,
 				'label'    => __( 'Email address', 'tt-bookings' ),
 				'type'     => 'email',
 				'required' => true,
@@ -37,6 +39,7 @@ class TTB_Fields {
 			),
 			array(
 				'key'      => 'phone',
+								'compact'  => true,
 				'label'    => __( 'Phone / WhatsApp', 'tt-bookings' ),
 				'type'     => 'tel',
 				'required' => true,
@@ -89,6 +92,7 @@ class TTB_Fields {
 						'fields' => array(
 							array(
 								'key'      => 'direction',
+								'compact'  => true,
 								'label'    => __( 'Transfer direction', 'tt-bookings' ),
 								'type'     => 'radio',
 								'required' => true,
@@ -102,6 +106,7 @@ class TTB_Fields {
 							),
 							array(
 								'key'         => 'pickup_location',
+								'compact'  => true,
 								'label'       => __( 'Pickup location', 'tt-bookings' ),
 								'type'        => 'text',
 								'required'    => true,
@@ -110,6 +115,7 @@ class TTB_Fields {
 							),
 							array(
 								'key'         => 'dropoff_location',
+								'compact'  => true,
 								'label'       => __( 'Drop-off location', 'tt-bookings' ),
 								'type'        => 'text',
 								'required'    => true,
@@ -118,6 +124,7 @@ class TTB_Fields {
 							),
 							array(
 								'key'      => 'pickup_date',
+								'compact'  => true,
 								'label'    => __( 'Pickup date', 'tt-bookings' ),
 								'type'     => 'date',
 								'required' => true,
@@ -126,6 +133,7 @@ class TTB_Fields {
 							),
 							array(
 								'key'      => 'pickup_time',
+								'compact'  => true,
 								'label'    => __( 'Pickup time', 'tt-bookings' ),
 								'type'     => 'time',
 								'required' => true,
@@ -142,6 +150,7 @@ class TTB_Fields {
 							),
 							array(
 								'key'         => 'return_date',
+								'compact'  => true,
 								'label'       => __( 'Return pickup date & time', 'tt-bookings' ),
 								'type'        => 'datetime-local',
 								'required'    => false,
@@ -151,6 +160,7 @@ class TTB_Fields {
 							),
 							array(
 								'key'      => 'passengers',
+								'compact'  => true,
 								'label'    => __( 'Passengers', 'tt-bookings' ),
 								'type'     => 'number',
 								'required' => true,
@@ -199,8 +209,9 @@ class TTB_Fields {
 					array(
 						// Groceries are only useful on a leg that ends at home,
 						// so this whole section hides on an airport-bound trip.
-						'title'   => __( 'Groceries for your arrival', 'tt-bookings' ),
-						'show_if' => array( 'direction' => array( 'arrival', 'return' ) ),
+						'title'       => __( 'Groceries for your arrival', 'tt-bookings' ),
+						'description' => __( 'Groceries are an extra charge. We will confirm the price with your booking.', 'tt-bookings' ),
+						'show_if'     => array( 'direction' => array( 'arrival', 'return' ) ),
 						'fields'  => array(
 							array(
 								'key'      => 'milk',
@@ -254,6 +265,7 @@ class TTB_Fields {
 						'fields' => array(
 							array(
 								'key'         => 'tour_name',
+								'compact'  => true,
 								'label'       => __( 'Tour or destination', 'tt-bookings' ),
 								'type'        => 'text',
 								'required'    => true,
@@ -262,6 +274,7 @@ class TTB_Fields {
 							),
 							array(
 								'key'      => 'tour_date',
+								'compact'  => true,
 								'label'    => __( 'Preferred start date', 'tt-bookings' ),
 								'type'     => 'date',
 								'required' => true,
@@ -292,6 +305,7 @@ class TTB_Fields {
 							),
 							array(
 								'key'      => 'adults',
+								'compact'  => true,
 								'label'    => __( 'Adults', 'tt-bookings' ),
 								'type'     => 'number',
 								'required' => true,
@@ -372,6 +386,7 @@ class TTB_Fields {
 						'fields' => array(
 							array(
 								'key'      => 'vehicle_type',
+								'compact'  => true,
 								'label'    => __( 'Vehicle type', 'tt-bookings' ),
 								'type'     => 'select',
 								'required' => true,
@@ -389,6 +404,7 @@ class TTB_Fields {
 							),
 							array(
 								'key'      => 'with_driver',
+								'compact'  => true,
 								'label'    => __( 'Driver', 'tt-bookings' ),
 								'type'     => 'radio',
 								'required' => true,
@@ -401,6 +417,7 @@ class TTB_Fields {
 							),
 							array(
 								'key'      => 'pickup_date',
+								'compact'  => true,
 								'label'    => __( 'Pickup date & time', 'tt-bookings' ),
 								'type'     => 'datetime-local',
 								'required' => true,
@@ -409,6 +426,7 @@ class TTB_Fields {
 							),
 							array(
 								'key'      => 'return_date',
+								'compact'  => true,
 								'label'    => __( 'Return date & time', 'tt-bookings' ),
 								'type'     => 'datetime-local',
 								'required' => true,
@@ -417,6 +435,7 @@ class TTB_Fields {
 							),
 							array(
 								'key'         => 'pickup_location',
+								'compact'  => true,
 								'label'       => __( 'Pickup location', 'tt-bookings' ),
 								'type'        => 'text',
 								'required'    => true,
@@ -425,6 +444,7 @@ class TTB_Fields {
 							),
 							array(
 								'key'         => 'dropoff_location',
+								'compact'  => true,
 								'label'       => __( 'Return location', 'tt-bookings' ),
 								'type'        => 'text',
 								'required'    => false,
@@ -433,6 +453,7 @@ class TTB_Fields {
 							),
 							array(
 								'key'      => 'passengers',
+								'compact'  => true,
 								'label'    => __( 'Passengers', 'tt-bookings' ),
 								'type'     => 'number',
 								'required' => false,
